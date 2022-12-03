@@ -6,7 +6,7 @@ export default function MovieDetails() {
   return (
     <div className="detail"> 
       <div className="top-search-bar">
-        <Link to="movies"> Back</Link>
+        <Link to="/movies"> Back</Link>
         <div>
           <p>Guardians of the Galaxy</p><p>All heroes start somewhere.</p>
           </div>

@@ -1,20 +1,18 @@
-import { Route, Routes, Navigate } from "react-router-dom";
-import MovieDetails from "./components/MovieDetails";
-import Movies from "./components/Movies";
+import React from "react";
+import { useRoutes } from "react-router-dom";
+import MoviesGenresContext from "./context/MoviesGenresContext";
+import TopHeader from "./components/TopHeader";
 import "./App.scss";
+import routes from "./routes/routes";
 
 function App() {
+  const router = useRoutes(routes);
   return (
     <>
-      <header></header>
-      <div className="App">
-        <Routes>
-          <Route path="/movies" element={<Movies />} />
-          <Route path="/movies/:id" element={<MovieDetails />} />
-          {/* <Route path="/https://www.themoviedb.org" to="https://www.themoviedb.org/"  /> */}
-          <Route path="/*" element={<Navigate to="/movies" />} />
-        </Routes>
-      </div>
+      <MoviesGenresContext>
+           <TopHeader />
+          <div className="App">{router}</div>
+       </MoviesGenresContext>
     </>
   );
 }
