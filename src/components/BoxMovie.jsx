@@ -1,24 +1,18 @@
-import React, { useContext, useEffect } from "react";
+import React from "react";
  import { Link } from "react-router-dom";
-import img from "../assets/images/611ixoDpRLL 1.png";
-import calenderIcon from "../assets/icons/32px-Calendar_icon_2 1.png";
-// get genre from api context 
-import { genreContext } from '../context/MoviesGenresContext';
+ import calenderIcon from "../assets/icons/32px-Calendar_icon_2 1.png";
 
-export default function BoxMovie() {
-    const genres = useContext(genreContext)
-    useEffect(()=>{
-      console.log(genres)
-     })
+export default function BoxMovie({id,title,backdrop_path,release_date}) {
+
   return (
-    <Link to={`/movieditail/3`}>
+    <Link to={`/movieditail/${id}`} >
     <div className="movie">
-     <img src={img} alt="movie" />
-      <div className="movie-details">
-       <p>ones film</p>
+     <img src={`https://image.tmdb.org/t/p/w500/${backdrop_path}`} alt={title} />
+      <div className="movie-ditails">
+       <p> {title}</p>
        <div>
          <img src={calenderIcon} alt="calender" />
-         <span>2014-10-22</span>
+         <span>{release_date}</span>
        </div>
        <ul className="category">
           <li>Action</li>

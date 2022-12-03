@@ -15,19 +15,22 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   margin: 0 auto;
   overflow-x: hidden;
+  background-color: #07483f;
   
   a {
     text-decoration: none;
+    color:#ffffff !important;
   }
    header {
     width: 1440px;
     height: 35px;
     margin: 0 auto;
-    background-color: $color-primary;
+    background-color: #17684d;
   }
   .App {
     max-width: 1024px;
     height: auto;
+    background-color: #07483f;
     margin: 0 auto;
     // search box===============================================>>>>>>>>>>>>>>>>>
     .search {
@@ -35,7 +38,7 @@ body {
       width: 1024px;
       height: 75px;
       margin-top: 50px;
-      background-color: $gray-color;
+      background-color: #4d6c4f;
       padding: 3px 30px;
       border-radius: 0.3rem;
       font-size: 16px;
@@ -46,6 +49,8 @@ body {
         input {
           padding: 6px 10px;
           margin-left: 20px;
+          background-color: #999090 ;
+          border-radius: 0.3rem;
           border: none;
           &:focus {
             outline: none;
@@ -60,7 +65,7 @@ body {
         width: 84px;
         height: 33px;
         padding: 5px 9px;
-        background: #549df2;
+        background:#25a92e;
         cursor: pointer;
         border-radius: 100px;
         color: #fff;
@@ -89,15 +94,16 @@ body {
           display: flex;
           width: 295px;
           height: 195px;
-          background-color: #f1f1f1;
-          border: 1px solid #c4c4c4;
+          background-color: #a2babb;
+          border: 1px solid #a2babb;
           border-radius: 6px;
+          box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;;
           img {
             width: 128px;
             height: 100%;
             border-radius: 6px 0px 0px 6px;
           }
-          .movie-details {
+          .movie-ditails {
             overflow: hidden;
             display: flex;
             flex-direction: column;
@@ -192,14 +198,14 @@ body {
     border-radius: 6px;
     padding: 5px 25px;
     height: 75px;
-    background-color: $gray-color;
+    background-color: #4d6c4f ;
     a {
       width: 93px;
       height: 33px;
       display: flex;
       margin-right: 30px;
       padding: 5px;
-      background: #549df2;
+      background: #25a92e;
       cursor: pointer;
       justify-content: center;
       border-radius: 100px;
@@ -224,23 +230,37 @@ body {
       }
     }
   }
-  .details-movies {
+  .ditails-movies {
     margin-top: 40px;
     display: flex;
     img {
       width: 330px;
       min-height: 495;
     }
-    .details-wrapper {
+    .ditails-wrapper {
       width: 690px;
       margin-left: 40px;
-    }
+      .detail-items{
+        color:#dddddd;
+        span{
+          .genre-items{
+          :first-child{
+            color:#dddddd!important;
+          }
+          }
+
+        }
+      }
+      *p{
+        color:rgb(245, 225, 225);
+      }
   }
   .review {
-    margin-top: 50px;
+    
     p {
       font-weight: 400;
-      font-size: 16px;
+      margin: 50px 0;
+       font-size: 16px;
       line-height: 22px;
     }
   }
@@ -255,10 +275,10 @@ body {
       font-weight: 400;
       font-size: 14px;
       line-height: 22px;
-      color: #1e1e1e;
+      color: #dddddd;
     }
   }
-  .details-wrapper {
+  .ditails-wrapper {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -270,17 +290,11 @@ body {
       margin-top: 40px;
       justify-content: space-between;
       align-items: center;
-      :first-child {
-        margin-top: 0;
-        font-weight: 700;
-        font-size: 16px;
-        line-height: 22px;
-        color: #151515;
-      }
+   
       :last-child {
         font-weight: 400;
         font-size: 16px;
-        color: #151515;
+        color: #dddddd;
         line-height: 22px;
       }
     }
@@ -291,4 +305,5 @@ body {
   
     }
   }
+}
 }
