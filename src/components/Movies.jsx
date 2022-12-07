@@ -1,25 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef} from "react";
 import { useParams } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import Paginate from "./Paginate";
 import BoxMovie from "./BoxMovie";
-import { getMoviesList } from "../services/api";
+import { moviesApi } from "../helper/fanctions";
+import Loader from "./Loader";
 
 export default function Movies() {
   const [movies, setMovies] = useState([]);
   const [searchData,setSearchData] = useState('')
    let params = useParams();
   let pageNumber = Number(params.page.split("=")[1]);
+  const moviesWrapper = useRef()
   useEffect(() => {
-    const moviesApi = async (pageNumber) => {
-      const data = await getMoviesList(pageNumber);
-      setMovies(data);
-    };
-    moviesApi(pageNumber);
+    // <<<<<<<<<=================    get moviesData from api(themoviedb/list)    ======================>>>>>>>> 
+    moviesApi(pageNumber)
+    .then((moviesData) => {
+      setMovies(moviesData)
+      moviesWrapper.current.classList.remove('active-blur')
+    })
   }, [pageNumber]);
   const handelSearchFilterInput = (event)=>{
     setSearchData(event.target.value);
    }
+const setBlurMoviesWrappper = ()=>{
+  moviesWrapper.current.classList.add('active-blur')
+ }
   
     let searchMovies
     if(movies.results){
@@ -33,10 +39,10 @@ export default function Movies() {
       <SearchBar 
       handelSearchFilterInput={handelSearchFilterInput}
        />
-      <div className="movies-wrapper">
+      <div className="movies__wrapper" ref={moviesWrapper}>
         {searchMovies ? (
           <>
-            {searchMovies.slice(0,9).map((movie) => {
+            {searchMovies.slice(0,12).map((movie) => {
               return (
                 <>
                   <BoxMovie
@@ -46,6 +52,7 @@ export default function Movies() {
                     backdrop_path={movie.poster_path}
                     genre_ids={[...movie.genre_ids]}
                     release_date={movie.release_date}
+                    pageNumber={pageNumber}
                   />
                 </>
               );
@@ -53,11 +60,11 @@ export default function Movies() {
           </>
         ) : (
           <div style={{ textAlign: "center", marginRight: "-700px" }}>
-            loading...
+            <Loader />
           </div>
         )}
       </div>
-      <Paginate pageNumber={pageNumber} />
+      <Paginate pageNumber={pageNumber} setBlurMoviesWrappper={setBlurMoviesWrappper} />
     </>
   );
 }
