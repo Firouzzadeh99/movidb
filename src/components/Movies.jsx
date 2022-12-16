@@ -1,48 +1,50 @@
-import React, { useEffect, useState,useRef} from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import Paginate from "./Paginate";
 import BoxMovie from "./BoxMovie";
-import { moviesApi } from "../helper/fanctions";
+import { getMoviesGenres, getMoviesList} from "../services/api";
 import Loader from "./Loader";
 
-export default function Movies() {
+const Movies = () => {
+  console.log('gl render')
   const [movies, setMovies] = useState([]);
-  const [searchData,setSearchData] = useState('')
-   let params = useParams();
+  const [genres, setGenres] = useState([]);
+  const [searchData, setSearchData] = useState('')
+  let params = useParams();
   let pageNumber = Number(params.page.split("=")[1]);
   const moviesWrapper = useRef()
   useEffect(() => {
-    // <<<<<<<<<=================    get moviesData from api(themoviedb/list)    ======================>>>>>>>> 
-    moviesApi(pageNumber)
-    .then((moviesData) => {
-      setMovies(moviesData)
-      moviesWrapper.current.classList.remove('active-blur')
+    console.log('ef render')
+
+    Promise.all([getMoviesList(), getMoviesGenres()]).then(response => {
+      setMovies(response[0])
+      setGenres(response[1].genres)
     })
   }, [pageNumber]);
-  const handelSearchFilterInput = (event)=>{
+  const handelSearchFilterInput = (event) => {
     setSearchData(event.target.value);
-   }
-const setBlurMoviesWrappper = ()=>{
-  moviesWrapper.current.classList.add('active-blur')
- }
-  
-    let searchMovies
-    if(movies.results){
-      searchMovies = movies.results.filter(movies =>{
-        return movies.release_date.includes(searchData)
-      })
- 
-    }
+  }
+  const setBlurMoviesWrappper = () => {
+    moviesWrapper.current.classList.add('active-blur')
+  }
+
+  let searchMovies
+  if (movies.results) {
+    searchMovies = movies.results.filter(movies => {
+      return movies.release_date.includes(searchData)
+    })
+
+  }
   return (
     <>
-      <SearchBar 
-      handelSearchFilterInput={handelSearchFilterInput}
-       />
+      <SearchBar
+        handelSearchFilterInput={handelSearchFilterInput}
+      />
       <div className="movies__wrapper" ref={moviesWrapper}>
         {searchMovies ? (
           <>
-            {searchMovies.slice(0,12).map((movie) => {
+            {searchMovies.slice(0, 12).map((movie) => {
               return (
                 <>
                   <BoxMovie
@@ -53,6 +55,7 @@ const setBlurMoviesWrappper = ()=>{
                     genre_ids={[...movie.genre_ids]}
                     release_date={movie.release_date}
                     pageNumber={pageNumber}
+                    genres={genres}
                   />
                 </>
               );
@@ -68,3 +71,5 @@ const setBlurMoviesWrappper = ()=>{
     </>
   );
 }
+export default Movies
+   

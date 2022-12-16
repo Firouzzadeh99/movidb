@@ -2,21 +2,19 @@ import React,{useEffect,useState} from 'react'
 import { useParams } from 'react-router-dom'
 import { Link} from 'react-router-dom'
 import Loader from './Loader'
-import { detailApi,isEmpty } from '../helper/fanctions'
- 
-export default function Movieditails() {
+import { detailApi} from '../helper/fanctions'
+  
+ const Movieditails = ()=> {
   const [ditails, setditails] =useState([])
    const params = useParams()
   const movieId = params.id.split("_")
-  // <<<<<<<<<=================     Check the data is empty for display Spinner    ======================>>>>>>>> 
-  const empty = isEmpty(ditails)
-    useEffect(()=>{
+      useEffect(()=>{
 // <<<<<<<<<=================    get movieDitils from api    ======================>>>>>>>> 
    detailApi(movieId[1])
    .then((ditils) => {
      setditails(ditils)
    })
-    },[])
+  },[])
 
     return (
     <div className="ditail"> 
@@ -27,7 +25,7 @@ export default function Movieditails() {
           </div>
       </div>
         {
-          empty ?
+          Object.keys(ditails).length ?
           (
             <>
       <div className="ditail__movies">
@@ -61,3 +59,4 @@ export default function Movieditails() {
   )
 }
 
+export default Movieditails
