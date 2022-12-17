@@ -1,33 +1,30 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState,useCallback } from "react";
 import { useParams } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import Paginate from "./Paginate";
 import BoxMovie from "./BoxMovie";
-import { getMoviesGenres, getMoviesList} from "../services/api";
-import Loader from "./Loader";
-
+import { getMoviesGenres, getMoviesList } from "../services/api";
+import SkeletonMovies from "./Skeleton/SkeletonMovies";
+ 
 const Movies = () => {
-  console.log('gl render')
-  const [movies, setMovies] = useState([]);
+   const [movies, setMovies] = useState([]);
   const [genres, setGenres] = useState([]);
   const [searchData, setSearchData] = useState('')
   let params = useParams();
   let pageNumber = Number(params.page.split("=")[1]);
-  const moviesWrapper = useRef()
-  useEffect(() => {
-    console.log('ef render')
-
-    Promise.all([getMoviesList(), getMoviesGenres()]).then(response => {
+   useEffect(() => {
+     Promise.all([getMoviesList(pageNumber), getMoviesGenres()]).then(response => {
       setMovies(response[0])
       setGenres(response[1].genres)
     })
   }, [pageNumber]);
-  const handelSearchFilterInput = (event) => {
+  const handelSearchFilterInput = useCallback((event) => {
     setSearchData(event.target.value);
-  }
-  const setBlurMoviesWrappper = () => {
-    moviesWrapper.current.classList.add('active-blur')
-  }
+  },[])
+  const handelPagenate = useCallback(() => {
+    setMovies([]);
+  },[pageNumber])
+
 
   let searchMovies
   if (movies.results) {
@@ -38,17 +35,18 @@ const Movies = () => {
   }
   return (
     <>
+ 
       <SearchBar
         handelSearchFilterInput={handelSearchFilterInput}
       />
-      <div className="movies__wrapper" ref={moviesWrapper}>
+      <div className="movies__wrapper">
         {searchMovies ? (
           <>
             {searchMovies.slice(0, 12).map((movie) => {
               return (
                 <>
                   <BoxMovie
-                    key={movie.id}
+                    Key={movie.id}
                     id={movie.id}
                     title={movie.title}
                     backdrop_path={movie.poster_path}
@@ -62,14 +60,11 @@ const Movies = () => {
             })}
           </>
         ) : (
-          <div style={{ textAlign: "center", marginRight: "-700px" }}>
-            <Loader />
-          </div>
+          <SkeletonMovies/>
         )}
       </div>
-      <Paginate pageNumber={pageNumber} setBlurMoviesWrappper={setBlurMoviesWrappper} />
-    </>
+      <Paginate pageNumber={pageNumber} handelPagenate={handelPagenate} />
+     </>
   );
 }
 export default Movies
-   

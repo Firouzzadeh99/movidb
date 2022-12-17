@@ -1,11 +1,13 @@
 import React,{useEffect,useState} from 'react'
 import { useParams } from 'react-router-dom'
 import { Link} from 'react-router-dom'
-import Loader from './Loader'
-import { detailApi} from '../helper/fanctions'
+ import { detailApi} from '../helper/fanctions'
+import SkeletonElement from './Skeleton/SkeletonElement'
+ import SkeletonInfo from './Skeleton/SkeletonInfo'
   
  const Movieditails = ()=> {
   const [ditails, setditails] =useState([])
+  const [imgLoad, setImgLoad] =useState(false)
    const params = useParams()
   const movieId = params.id.split("_")
       useEffect(()=>{
@@ -29,7 +31,10 @@ import { detailApi} from '../helper/fanctions'
           (
             <>
       <div className="ditail__movies">
-             <img loading="lazy" src={`https://image.tmdb.org/t/p/w500/${ditails.backdrop_path}`}alt="poster" />
+        {
+          imgLoad ? <SkeletonElement type='avatar' />:  <img loading="lazy" onLoad={setImgLoad(!imgLoad)} src={`https://image.tmdb.org/t/p/w500/${ditails.backdrop_path}`}alt="poster" />
+        }
+            
          <div className='ditail__movies-wrapper'>
             <div className="ditail__movies-items"><span>Budget</span><span>${ditails.budget  ? ditails.budget.toLocaleString() : 0}</span></div>
             <div className="ditail__movies-items"><span>Revenue</span><span>${ditails.revenue ? ditails.revenue.toLocaleString() : 0}</span></div>
@@ -53,7 +58,7 @@ import { detailApi} from '../helper/fanctions'
         <p style={{marginBottom:"60px",color:"#dddddd"}}>Zoe Saldanna , Vin Diesel , Chris Pratt , Bradley Cooper , Lee Pace , Zoe Saldanna , Vin Diesel , Chris Pratt , Bradley Cooper , Lee Pace and 19 more.</p>
       </div>
             </>
-          ) : (<div style={{margin:" 50px 0 0 50%"}}><Loader /></div>)
+          ) : <SkeletonInfo />
         }
      </div>
   )

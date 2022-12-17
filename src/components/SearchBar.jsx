@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function SearchBar({handelSearchFilterInput}) {
+const SearchBar = ({handelSearchFilterInput})=> {
   return (
     <div className="search">
          <div className="search__box">
@@ -11,3 +11,4 @@ export default function SearchBar({handelSearchFilterInput}) {
     </div>
    )
 }
+export default React.memo(SearchBar)

@@ -1,0 +1,68 @@
+// basic class 
+.skeleton{
+    background: #042621;
+    margin: 0.8rem 0;
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+    &::before{
+        content: '';
+        position: absolute;
+        top:0;
+        left: 0;
+        width: 50%;
+        height: 100%;
+        background-color: rgba(31, 41, 28, 0.1);
+        transform: skewX(40deg);
+        box-shadow:  0 0 30px 30px rgba(0,0,0,0.02)  ;
+         animation: loading 2s  infinite;
+    }
+    &.text{
+        width: 15%;
+        height: 12px;
+        display: flex;
+    }
+    &.title{
+        width: 50%;
+        height: 20px;
+        margin-bottom: 15px;
+    }
+    &.avatar{
+        width: 350px;
+        height: 440px;
+        border-radius: 10px;
+     }
+    &.box{
+        width: 18.4rem;
+        height:  12.1rem;
+     }
+}
+.skelecton__movie{
+    width: 100%;
+    min-height: 600px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    column-gap: 4.2rem;
+    row-gap: 1.5rem;
+    margin-top: 2.5rem;
+}
+.skelecton__info{
+       margin-top: 40px;
+      display: flex;
+     .s-item{
+        display: contents;
+            :first-child{
+                margin-left:40px ;
+             }
+            :last-child{
+                margin-left: 580px;
+             }
+     }
+}
+@keyframes loading{
+    0%{left:677px;}
+    // 50%{left:400px; }
+    100%{left:-577px;}
+ 
+}

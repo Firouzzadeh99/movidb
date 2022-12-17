@@ -1,12 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function Paginate({ pageNumber,setBlurMoviesWrappper}) {
+const Paginate = ({ pageNumber,handelPagenate})=> {
   return (
     <footer>
       <div>
         {pageNumber > 1 ? (
-          <Link to={`/movie/page=${pageNumber > 1 ? pageNumber - 1 : 1}`} onClick={setBlurMoviesWrappper}>
+          <Link to={`/movie/page=${pageNumber > 1 ? pageNumber - 1 : 1}`} onClick={handelPagenate}  >
              Previous Page 
           </Link>
         ) : (
@@ -14,7 +14,7 @@ export default function Paginate({ pageNumber,setBlurMoviesWrappper}) {
         )}
         |
         {pageNumber < 20 ? (
-          <Link to={`/movie/page=${pageNumber + 1}`} onClick={setBlurMoviesWrappper}>Next Page</Link>
+          <Link  to={`/movie/page=${pageNumber + 1}`} onClick={handelPagenate} >Next Page</Link>
         ) : (
           <span className="isDisabled">Next Page</span>
         )}
@@ -23,3 +23,4 @@ export default function Paginate({ pageNumber,setBlurMoviesWrappper}) {
     </footer>
   );
 }
+export default React.memo(Paginate)
