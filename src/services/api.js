@@ -1,21 +1,27 @@
 const BASE_URL =  'https://api.themoviedb.org'
 const API_KEY = 'ed43e21e611a11f42d0b891c1ee65c95'
-const getMoviesGenres = async()=>{
-   const data =  await fetch(`${BASE_URL}/3/genre/movie/list?api_key=${API_KEY}`)
-   const genre = await data.json()
-   return genre
+ const getMoviesGenres = ()=>{
+  return fetch(`${BASE_URL}/3/genre/movie/list?api_key=${API_KEY}`)
+  .then(res=>res.json())
+ .then(movies => movies)
+ 
 }
- const getMoviesList = async(pageNumber)=>{
-   const data =  await fetch(`${BASE_URL}/3/discover/movie?api_key=${API_KEY}&page=${pageNumber}`)
-   const movies = await data.json()
-    return movies
+ const getMoviesList = (pageNumber)=>{
+  return fetch(`${BASE_URL}/3/discover/movie?api_key=${API_KEY}&page=${pageNumber}`)
+  .then(res=>res.json())
+  .then(movies => movies)
+  
 }
- const moviesDetailApi = async(id)=>{
-   const data =  await fetch(`${BASE_URL}/3/movie/${id}?api_key=${API_KEY}&language=en-US`)
-   const movieDetail = await data.json()
-    return movieDetail
+const getAllMovies =(pageNumber)=>{
+ return Promise.all([getMoviesList(pageNumber), getMoviesGenres()])
+ 
 }
-export {getMoviesGenres,getMoviesList,moviesDetailApi}
+
+  const moviesDetailApi = (id)=>{
+  return fetch(`${BASE_URL}/3/movie/${id}?api_key=${API_KEY}&language=en-US`)
+ 
+}
+export {getMoviesGenres,getMoviesList,moviesDetailApi,getAllMovies}
  
   
  

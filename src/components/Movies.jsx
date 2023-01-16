@@ -3,17 +3,20 @@ import { useParams } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import Paginate from "./Paginate";
 import BoxMovie from "./BoxMovie";
-import { getMoviesGenres, getMoviesList } from "../services/api";
+import {getAllMovies } from "../services/api";
 import SkeletonMovies from "./Skeleton/SkeletonMovies";
  
 const Movies = () => {
    const [movies, setMovies] = useState([]);
   const [genres, setGenres] = useState([]);
-  const [searchData, setSearchData] = useState('')
+  const [searchData, setSearchData] =  useState('')
   let params = useParams();
-  let pageNumber = Number(params.page.split("=")[1]);
-   useEffect(() => {
-     Promise.all([getMoviesList(pageNumber), getMoviesGenres()]).then(response => {
+   let pageNumber 
+  params.page ?  pageNumber = Number(params.page.split("=")[1]) :  pageNumber = 1
+  useEffect(() => {
+    console.log(pageNumber)
+    getAllMovies(pageNumber)
+    .then(response => {
       setMovies(response[0])
       setGenres(response[1].genres)
     })
@@ -43,10 +46,11 @@ const Movies = () => {
         {searchMovies ? (
           <>
             {searchMovies.slice(0, 12).map((movie) => {
+
               return (
-                <>
+                <React.Fragment key={movie.id}>
                   <BoxMovie
-                    Key={movie.id}
+                     
                     id={movie.id}
                     title={movie.title}
                     backdrop_path={movie.poster_path}
@@ -55,7 +59,7 @@ const Movies = () => {
                     pageNumber={pageNumber}
                     genres={genres}
                   />
-                </>
+                </React.Fragment>
               );
             })}
           </>

@@ -21,7 +21,7 @@ const BoxMovie = ({ pageNumber, genre_ids, id, title, backdrop_path, release_dat
           </div>
           <ul className="movies__wrapper-category">
             {
-              genresList ? genresList.map(genre => <li><span></span> {genre.name}</li>) : <>..</>
+              genresList ? genresList.map(genre => <li key={genre.id}><span></span> {genre.name}</li>) : <>..</>
             }
           </ul>
         </div>
