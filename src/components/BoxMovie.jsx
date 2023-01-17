@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import calenderIcon from "../assets/icons/32px-Calendar_icon_2 1.png";
+import { Card, Box, Typography } from '@mui/material'
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+ 
 
 const BoxMovie = ({ pageNumber, genre_ids, id, title, backdrop_path, release_date, genres }) => {
   let genresList
@@ -10,23 +12,23 @@ const BoxMovie = ({ pageNumber, genre_ids, id, title, backdrop_path, release_dat
     })
   }
   return (
-    <Link to={`/movieditail/${pageNumber}_${id}`}>
-      <div className="movies__wrapper-movie">
-        <img src={`https://image.tmdb.org/t/p/w500/${backdrop_path}`} alt={title} loading="lazy" />
-        <div className="movies__wrapper-ditails">
-          <p> {title}</p>
-          <div>
-            <img src={calenderIcon} alt="calender" />
-            <span>{release_date}</span>
-          </div>
-          <ul className="movies__wrapper-category">
+    <Card sx={{ height: "200px", boxShadow: "0 54px 55px rgb(0 0 0 / 25%), 0 -0.7rem 30px rgb(0 0 0 / 12%), 0 4px 0.6rem rgb(0 0 0 / 12%), 0 0.7rem 13px rgb(0 0 0 / 17%), 0 -3px 5px rgb(0 0 0 / 9%)", }}>
+      <Link style={{ display: "flex" }} to={`/movieditail/${pageNumber}_${id}`}>
+        <img style={{ width: "160px", height: "100%" }} src={`https://image.tmdb.org/t/p/w500/${backdrop_path}`} alt={title} loading="lazy" />
+        <Box sx={{ p: 1, overflow: "auto", }} >
+          <Typography color="black" sx={{ fontSize: "14px", fontWeight: "600" }}> {title.length > 19 ? title.split(",")[0] : title}</Typography>
+          <Box display="flex" sx={{ mt: 8 }}>
+            <CalendarTodayIcon sx={{color:"#505050", fontSize:20,mt:1}}/>
+             <Typography sx={{ mx: 1, color: "#505050", mt: 1, fontSize: "14px" }}>{release_date}</Typography>
+          </Box>
+          <ul style={{ margin: "6px 3px", color: "#505050", display: "flex", flexWrap:"wrap", justifyContent: "flex-start", fontSize: "14px" }} >
             {
-              genresList ? genresList.map(genre => <li key={genre.id}><span></span> {genre.name}</li>) : <>..</>
+              genresList ? genresList.map(genre => <li style={{ margin: "0 10px"  }} key={genre.id}><span></span> {genre.name}</li>) : <>..</>
             }
           </ul>
-        </div>
-      </div>
-    </Link>
+        </Box>
+      </Link>
+    </Card>
   )
 }
 export default BoxMovie
