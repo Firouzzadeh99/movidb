@@ -1,31 +1,38 @@
 import React , {useRef,useState} from 'react'
 import { Box, Typography } from '@mui/material';
 import CloudQueueIcon from '@mui/icons-material/CloudQueue';
+import {getSelectedFileType} from '../../utils/functions'
 
 const FileUploader = (
     {
         isdisable,
         textDifaultFile = "با کلیک کردن در اینجا فایل مورد نظر را انتخاب نمایید",
-        getFiles,
+        setFileData,
          width
     }
 ) => {
     const inputRef = useRef()
      const handelClick=(e)=>{
-        if(!isdisable){
-            alert('نوع سند را انتخاب کنید')
-            return
+       if(!isdisable){
+         alert('نوع سند را انتخاب کنید')
+         return
         }else{
-            inputRef.current.click()
-         }
-     }
-     const handlerChangeFile =(e)=>{
-        const sizeInMB = (e.target.files[0].size / (1024*1024)).toFixed(2);
+          inputRef.current.click()
+        }
+      }
+      const handlerChangeFile =(e)=>{
+        const isValidFile = getSelectedFileType(e.target.files[0].name)
+        if(!isValidFile){
+          alert('پسوند فابل باید از نوع pdf,exel,mp4,png باشد')
+          return
+        }
+         const sizeInMB = (e.target.files[0].size / (1024*1024)).toFixed(2);
         if(sizeInMB > 20){
             alert('حجم فایل باید کمتر از ۲۰ مگابایت باشد ')
             return
         }
-        getFiles(e.target.files[0])
+        if(e.target.files)
+        setFileData(e.target.files[0],isValidFile)
          inputRef.current.value = ''
      }
     return (

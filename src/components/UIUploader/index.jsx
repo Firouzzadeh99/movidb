@@ -21,14 +21,15 @@ const Index = ({
     setDataType(e.target.outerText)
     setIsdisable(true)
   }
-  const getFiles = (file)=>{
+  const setFileData = (file,isValidFile)=>{
+   const fileType =  isValidFile ? isValidFile : 'none'
     if(!dataType){
-      alert('sanad')
+      alert('لطفا نوع سند را انتخاب کنید!')
       return
     }
     const id = Date.now()
-    console.log(files)
-    setFiles([...files,{...file,dataType,id}])
+    console.log('files'+files)
+    setFiles([...files,{...file,dataType,id,fileType}])
   }
 
   
@@ -40,7 +41,7 @@ const Index = ({
              {
                status === 'pending' ?
                <>
-               <FileUploader width={width} isdisable={isdisable} getFiles={getFiles}  />
+               <FileUploader width={width} isdisable={isdisable} setFileData={setFileData}  />
               <Box
                sx={{width:width,height:'80px',px:3,display:'flex',flexDirection:'column',justifyContent:'center',alignItem:'center',
                 boxShadow: "-3px 2px 17px -7px rgba(66, 68, 90, 1)",}}>
@@ -59,7 +60,7 @@ const Index = ({
                 renderInput={(params) => <TextField {...params} label="Movie" />}
               />
                   </Box>
-             <FileUploader width={width} isdisable={isdisable} getFiles={getFiles}  />
+             <FileUploader width={width} isdisable={isdisable} setFileData={setFileData}  />
                 </>
              }
              
