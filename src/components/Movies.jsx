@@ -15,8 +15,7 @@ const Movies = () => {
   let pageNumber
   params.page ? pageNumber = Number(params.page.split("=")[1]) : pageNumber = 1
   useEffect(() => {
-    console.log(pageNumber)
-    getAllMovies(pageNumber)
+     getAllMovies(pageNumber)
       .then(response => {
         setMovies(response[0])
         setGenres(response[1].genres)
